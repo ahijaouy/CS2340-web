@@ -4,13 +4,12 @@ module.exports = function(app, passport) {
   var mysql      = require('mysql'),
       dbconfig   = require('../config/database'),
       connection = mysql.createConnection(dbconfig.connection),
-      ensureLog  = require('connect-ensure-login').ensureLoggedIn();;
-  
-  connection.query('USE ' + dbconfig.database);
+      ensureLog  = require('connect-ensure-login').ensureLoggedIn(),
+      env        = require('node-env-file');
 
+	env('./config/variables.env');
+	connection.query('USE ' + dbconfig.database);
 
-
-  
 
 	app.get('/callback',
 	  passport.authenticate('auth0Strategy', { 
@@ -27,7 +26,7 @@ module.exports = function(app, passport) {
 	  });
 	  
 	  app.get('/login', function(req, res){
-	    res.render('login', { env: env });
+	    res.render('login', {callback: process.env.callbackURL});
 	  });
 
 	  
@@ -35,7 +34,7 @@ module.exports = function(app, passport) {
 
 
 	  app.get('/', function(req, res) {
-		    res.render('login');
+		    res.render('login', {callback: process.env.callbackURL});
 	  });
 
 	  //login, logout, and sign up routes
@@ -46,24 +45,24 @@ module.exports = function(app, passport) {
 
 
 
-	app.get('/profile', function(req, res) {
-		res.send('Editting Profile...');
+	app.get('/profile', ensureLog, function(req, res) {
+		res.render('profile');
 	});
 
 
-	app.get('/index', function(req, res) {
+	app.get('/index', ensureLog, function(req, res) {
 		res.render('index');
 	});
 
-	app.get('/water_reports', function(req, res) {
+	app.get('/water_reports', ensureLog, function(req, res) {
 		res.render('water_reports');
 	});
 
-	app.get('/historical_reports', function(req, res) {
+	app.get('/historical_reports', ensureLog, function(req, res) {
 		res.render('historical_reports');
 	});
 
-	app.get('/admin', function(req, res) {
+	app.get('/admin', ensureLog, function(req, res) {
 		res.render('admin');
 	});
 

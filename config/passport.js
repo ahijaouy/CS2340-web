@@ -1,19 +1,18 @@
-//var LocalStrategy   = require('passport-local').Strategy;
-var mysql           = require('mysql'); //MATCH this with package.json
-var bcrypt          = require('bcrypt-nodejs');
-var dbconfig        = require('./database');
+var mysql           = require('mysql') 
+    dbconfig        = require('./database'),
+    Auth0Strategy   = require('passport-auth0'),
+    env             = require('node-env-file');
 
-
-var Auth0Strategy = require('passport-auth0');
+env(__dirname + '/variables.env');
 
 
 module.exports = function(passport) {
   
   var strategy = new Auth0Strategy({
-                 domain:       'myoberon.auth0.com',
-                 clientID:     'M5xQRh1qxNyvAEvGtKkPPjvsTppsePhm',
-                 clientSecret: 'BWxMtntez8seF8gJqaTfUOvrc4DXoV-XiSsxGvHRb9n6hENxpFR-w_5itJKOpmGX',
-                 callbackURL:  'http://localhost/callback'
+                 domain:       process.env.domain,
+                 clientID:     process.env.clientID,
+                 clientSecret: process.env.clientSecret,
+                 callbackURL:  process.env.callbackURL
                 },
                 function(accessToken, refreshToken, extraParams, profile, done) {
                   // accessToken is the token to call Auth0 API (not needed in the most cases)

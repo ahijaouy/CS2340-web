@@ -12,11 +12,11 @@ var express			= require('express'),
 
 //for MySQLStore
 var options = {
-    host: '104.196.130.39',
-    port: 3306,
-    user: 'cs2340',
-    password: 'password',
-    database: 'thirstygoat',
+    host: dbconfig.connection.host,
+    port: dbconfig.connection.port,
+    user: dbconfig.connection.user,
+    password: dbconfig.connection.password,
+    database: dbconfig.database,
     createDatabaseTable: true,
     schema: {
         tableName: 'sessions',
