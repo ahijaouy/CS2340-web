@@ -55,7 +55,19 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/water_reports', ensureLog, function(req, res) {
-		res.render('water_reports');
+		connection.query('SELECT * from source_reports;', function(err, rows){
+			res.render('water_reports', {reports: rows});
+		});
+		
+	});
+
+	app.post('/newSourceReport', ensureLog, function(req, res) {
+		res.redirect('/water_reports');
+		console.log(req.body.location);
+	    stmt = 'INSERT INTO source_reports (location,water_type,water_condition,date_modified, user_modified) VALUES (?,?,?,?,?);';
+	    connection.query(stmt,[req.body.location,req.body.watertype,req.body.watercondition, new Date(),'Username'], function(err, rows){ 
+	    	//console.log(err);
+	    });
 	});
 
 	app.get('/historical_reports', ensureLog, function(req, res) {

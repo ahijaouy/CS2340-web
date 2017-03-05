@@ -11,6 +11,7 @@
 
 	</head>
 	<body>
+		<!--navbar Begins-->
 		<nav class="navbar navbar-inverse">
 		  <div class="container-fluid">
 		    <div class="navbar-header">
@@ -28,6 +29,139 @@
 		    </ul>
 		  </div>
 		</nav>
+		<!--navbar Ends-->
+
+		<!--Water Reports Table Begins-->
+		<div class="container-fluid">
+			<div class="row">
+				
+				<div class="col-md-10">
+					<h2 style="text-align: center">Water Source Reports</h2>
+					<table class="table table-responsive table-striped table-hover ">
+						<thead>
+							<tr>
+								<th>Report ID</th>
+								<th>Location</th>
+								<th>Water Type</th>
+								<th>Water Condition</th>
+								<th>Purity Report(s)</th>
+							</tr>
+						</thead>
+						{{#each reports}}
+						<tbody>
+							<tr>
+								<td>{{this.id}}</td>
+								<td>{{this.location}}</td>
+								<td>{{this.water_type}}</td>
+								<td>{{this.water_condition}}</td>
+								<td>Purity Report(s)</td>
+								{{!-- {{#if reports}}
+    								<td>Purity Report(s)</td>
+  								{{else}}
+							    	
+							  	{{/if}} --}}
+								
+							</tr>
+						</tbody>
+						{{/each}}
+					</table>
+				</div>
+				<div class="col-md-2">
+					<h2 style="text-align: center">New Source Report</h2>
+					<div>
+						<form action="newSourceReport" method="POST" class="form" role="form">
+						
+							<div class="form-group">
+								<label for="location">Location</label>
+								<input type="text" class="form-control" name="location" placeholder="Input field">
+							</div>
+							<div class="form-group">
+								<div class="form-group">
+								  <label for="watertype">Water Type</label>
+								  <select class="form-control" name="watertype">
+								    <option>Bottled</option>
+								    <option>Well</option>
+								    <option>Stream</option>
+								    <option>Lake</option>
+								    <option>Spring</option>
+								    <option>Other</option>
+								  </select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="form-group">
+								  <label for="watercondition">Water Type</label>
+								  <select class="form-control" name="watercondition">
+								    <option>Potable</option>
+								    <option>Treatable-Clear</option>
+								    <option>Treatable-Muddy</option>
+								    <option>Waste</option>
+								  </select>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-10" id="map" style="width: 83%; height: 500px"></div>
+				<div class="col-md-2">
+					<h2 style="text-align: center">New Purity Report</h2>
+					<div>
+						<form action="newPurityReport" method="POST" class="form" role="form">
+							<div class="form-group">
+								<div class="form-group">
+								  <label for="sourcereport">Source Report</label>
+								  <select class="form-control" name="sourcereport">
+								    {{#each reports}}
+								    <option>{{this.id}}</option>
+								    {{/each}}
+								  </select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="overallcondition-group">
+								  <label for="watertype">Overall Condition</label>
+								  <select class="form-control" name="overallcondition">
+								    <option>Safe</option>
+								    <option>Treatable</option>
+								    <option>Unsafe</option>
+								  </select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="form-group">
+								  <label for="virusppm">Virus PPM</label>
+								  <input type="number" class="form-control" name="virusppm"></input>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="form-group">
+								  <label for="contaminantppm">Contaminant PPM</label>
+								  <input type="number" class="form-control" name="contaminantppm"></input>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<script>
+	      var map;
+	      function initMap() {
+	        map = new google.maps.Map(document.getElementById('map'), {
+	          center: {lat: 33.7490, lng: -84.3880},
+	          zoom: 10
+	        });
+	      }
+	    </script>
+	    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNyA-jXmnBxisj6_lQiGPRuVBsr0LdZS0&callback=initMap"> 
+	    </script>
 
 		<!-- jQuery -->
 		<script src="//code.jquery.com/jquery.js"></script>
