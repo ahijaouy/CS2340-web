@@ -56,16 +56,26 @@ module.exports = function(app, passport) {
 
 	app.get('/water_reports', ensureLog, function(req, res) {
 		connection.query('SELECT * from source_reports;', function(err, rows){
-			res.render('water_reports', {reports: rows});
+			connection.query('SELECT * from purity_reports INNER JOIN source_reports on purity_reports.source_id=source_reports.source_report_id;', function(err, purity) {
+				res.render('water_reports', {reports: rows, purityreports:purity});
+			})
+			
 		});
 		
 	});
 
 	app.post('/newSourceReport', ensureLog, function(req, res) {
 		res.redirect('/water_reports');
-		console.log(req.body.location);
 	    stmt = 'INSERT INTO source_reports (location,water_type,water_condition,date_modified, user_modified) VALUES (?,?,?,?,?);';
 	    connection.query(stmt,[req.body.location,req.body.watertype,req.body.watercondition, new Date(),'Username'], function(err, rows){ 
+	    	//console.log(err);
+	    });
+	});
+
+	app.post('/newPurityReport', ensureLog, function(req, res) {
+		res.redirect('/water_reports');
+		stmt = 'INSERT INTO purity_reports (source_id, overall_condition, virus_ppm, contaminant_ppm, date_modified, user_modified) VALUES (?,?,?,?,?,?);';
+	    connection.query(stmt,[req.body.sourcereport,req.body.overallcondition,req.body.virusppm, req.body.contaminantppm, new Date(),'Username'], function(err, rows){ 
 	    	//console.log(err);
 	    });
 	});
