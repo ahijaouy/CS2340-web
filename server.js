@@ -8,6 +8,7 @@ var express			= require('express'),
 	mysqlStore		= require('express-mysql-session')(session),
 	Auth0Strategy	= require('passport-auth0'),
 	dbconfig        = require('./config/database'),
+    api             = require('./app/api'),
 	app				= express();
 
 //for MySQLStore
@@ -55,6 +56,8 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/api',  api);
 
 require('./config/passport')(passport);
 

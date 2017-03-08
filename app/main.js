@@ -16,32 +16,32 @@ module.exports = function(app, passport) {
 	    failureRedirect: '/login',
 	    successRedirect: '/index',
 	  }),
-	 function(req, res) {
+	  function(req, res) {
 	    if (req.body.remember) {
 	        req.session.cookie.maxAge = 1000 * 60 * 20; //20 minutes
 	    } else {
 	        req.session.cookie.expires = false;
 	    }
 	    res.redirect(req.session.returnTo || '/index');
-	  });
+	});
 	  
-	  app.get('/login', function(req, res){
+	app.get('/login', function(req, res){
 	    res.render('login', {callback: process.env.callbackURL});
-	  });
+	});
 
 	  
 	  //End of New Code
 
 
-	  app.get('/', function(req, res) {
+	app.get('/', function(req, res) {
 		    res.render('login', {callback: process.env.callbackURL});
-	  });
+	});
 
 	  //login, logout, and sign up routes
-	  app.get('/logout', function(req, res) {
+	app.get('/logout', function(req, res) {
 	    req.logout();
 	    res.redirect('/');
-	  });
+	});
 
 
 

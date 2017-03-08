@@ -48,8 +48,9 @@
 								<th>Date Reported</th>
 							</tr>
 						</thead>
-						{{#each reports}}
 						<tbody>
+						{{#each reports}}
+						
 							<tr>
 								<td>{{this.source_report_id}}</td>
 								<td>{{this.location}}</td>
@@ -64,8 +65,9 @@
 							  	{{/if}} --}}
 								
 							</tr>
-						</tbody>
 						{{/each}}
+						</tbody>
+						
 					</table>
 				</div>
 				<div class="col-md-2">
@@ -122,8 +124,9 @@
 								<th>Date Reported</th>
 							</tr>
 						</thead>
-						{{#each purityreports}}
 						<tbody>
+						{{#each purityreports}}
+						
 							<tr>
 								<td>{{this.purity_report_id}}</td>
 								<td>{{this.source_report_id}}</td>
@@ -140,8 +143,9 @@
 							  	{{/if}} --}}
 								
 							</tr>
-						</tbody>
+						
 						{{/each}}
+						</tbody>
 					</table>
 				</div>
 				<div class="col-md-2">
