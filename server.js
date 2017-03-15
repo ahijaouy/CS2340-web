@@ -54,6 +54,8 @@ app.use(session({
     saveUninitialized: true
 }));
 
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -63,8 +65,20 @@ require('./config/passport')(passport);
 
 require('./app/main.js')(app, passport);
 
-app.listen(80, function() {
-	console.log('we are live on 80');
+app.all('*', ensureSecure);
+function ensureSecure(req, res, next){
+    console.log('here');
+    console.log(req.secure);
+  if(req.secure){
+    // OK, continue
+    return next();
+  };
+  // handle port numbers if you need non defaults
+  res.redirect('https://' + req.hostname + req.url); // express 4.x
+};
+
+app.listen(443, function() {
+	console.log('we are live on 443');
 });
 
 module.exports = app;

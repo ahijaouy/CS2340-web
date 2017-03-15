@@ -47,7 +47,7 @@ router.route('/source_reports')
 	})
 	.post(function(req, res, next) {
 		stmt = 'INSERT INTO source_reports (location,water_type,water_condition,date_modified, user_modified) VALUES (?,?,?,?,?);';
-	    connection.query(stmt,[req.body.location,req.body.watertype,req.body.watercondition, new Date(),'Username'], function(err, rows){ 
+	    connection.query(stmt,[req.body.location,req.body.water_type,req.body.water_condition, req.body.date_modified,req.body.user_modified], function(err, rows){ 
 	    	res.send(rows);
 	    });
 	});
@@ -61,7 +61,7 @@ router.route('/purity_reports')
 	})
 	.post(function(req, res, next) {
 		stmt = 'INSERT INTO purity_reports (source_id, overall_condition, virus_ppm, contaminant_ppm, date_modified, user_modified) VALUES (?,?,?,?,?,?);';
-	    connection.query(stmt,[req.body.sourcereport,req.body.overallcondition,req.body.virusppm, req.body.contaminantppm, new Date(),'Username'], function(err, rows){ 
+	    connection.query(stmt,[req.body.source_id,req.body.overall_condition,req.body.virusppm, req.body.contaminantppm, req.body.date_modified,req.body.user_modified], function(err, rows){ 
 	    	//console.log(err);
 	    });
 	});
