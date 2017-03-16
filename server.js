@@ -9,8 +9,7 @@ var express			= require('express'),
 	Auth0Strategy	= require('passport-auth0'),
 	dbconfig        = require('./config/database'),
     api             = require('./app/api'),
-	app				= express(),
-    https           = require('https');
+	app				= express();
 
 //for MySQLStore
 var options = {
@@ -66,9 +65,6 @@ require('./config/passport')(passport);
 
 require('./app/main.js')(app, passport);
 
-https.get('/test', function(req, res) {
-    res.send('https works');
-})
 
 // app.all('*', ensureSecure);
 // function ensureSecure(req, res, next){
@@ -83,8 +79,7 @@ https.get('/test', function(req, res) {
 // };
 
 app.listen(80, function() {
-	console.log('we are live on 443');
+	console.log('we are live on 80');
 });
-https.createServer(app).listen(443);
 
 module.exports = app;
