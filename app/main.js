@@ -85,10 +85,53 @@ module.exports = function(app, passport) {
     });
   });
 
+  app.get('/source_reports/:id/delete', ensureLog, function(req, res) {
+    var stmt = 'DELETE from source_reports WHERE source_report_id=' + req.params.id;
+    var stmt2 = 'DELETE from purity_reports WHERE source_id=' + req.params.id;
+    connection.query(stmt2, function(err2, rows2) {
+      if (err2) {console.log(err2)};
+      connection.query(stmt, function(err, rows) {
+        if (err) {console.log(err)};
+        res.redirect('/water_reports');
+      });
+    });
+    
+  });
+
   app.post('/source_reports/:id/edit', ensureLog, function(req, res) {
     res.redirect('/water_reports');
     var stmt = 'UPDATE source_reports SET longitude=?, latitude=?, water_type=?, water_condition=?, date_modified=?, user_modified=? WHERE source_report_id=' + req.params.id + ';';
     connection.query(stmt, [req.body.longitude, req.body.latitude,req.body.water_type,req.body.water_condition, new Date(),'Username'], function(err, rows) {
+      if (err) {console.log(err)};
+      
+    });
+  });
+
+    app.get('/purity_reports/:id/edit', ensureLog, function(req, res) {
+    var stmt = 'SELECT * from purity_reports WHERE purity_report_id=' + req.params.id;
+    var stmt2 = 'SELECT source_report_id FROM source_reports;';
+    connection.query(stmt2, function(err2, rows2) {
+      if (err2) {console.log(err2)};
+      connection.query(stmt, function(err, rows) {
+        if (err) {console.log(err)};
+        res.render('edit_purity_report', {report: rows[0], reports: rows2});
+      });
+    });
+    
+  });
+
+  app.get('/purity_reports/:id/delete', ensureLog, function(req, res) {
+    var stmt = 'DELETE from purity_reports WHERE purity_report_id=' + req.params.id;
+    connection.query(stmt, function(err, rows) {
+      if (err) {console.log(err)};
+      res.redirect('/water_reports');
+    });
+  });
+
+  app.post('/purity_reports/:id/edit', ensureLog, function(req, res) {
+    res.redirect('/water_reports');
+    var stmt = 'UPDATE purity_reports SET source_id=?, overall_condition=?, virus_ppm=?, contaminant_ppm=?, date_modified=?, user_modified=? WHERE purity_report_id=' + req.params.id + ';';
+    connection.query(stmt, [req.body.source_id, req.body.overall_condition,req.body.virus_ppm,req.body.contaminant_ppm, new Date(),'Username'], function(err, rows) {
       if (err) {console.log(err)};
       
     });
