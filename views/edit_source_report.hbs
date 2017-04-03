@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Thirsty Goat</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/index">Thirsty Goat</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="/index">Home</a></li>
+          <li class="active"><a href="/water_reports">Water Reports</a></li>
+          <li><a href="/historical_reports">Historical Reports</a></li>
+          <li><a href="/admin">Admin</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> Edit Profile</a></li>
+          <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+    <h2 style="text-align: center">Edit Source Report</h2>
+          <div class="container-fluid">
+
+            <form action="/source_reports/{{report.source_report_id}}/edit" method="POST" class="form" role="form" style="display:block; width:50%; margin:0 auto;">
+            
+              <div class="form-group">
+                <label for="longitude">Longitude</label>
+                <input type="text" class="form-control" name="longitude" placeholder="Input field" value="{{report.longitude}}">
+              </div>
+              <div class="form-group">
+                <label for="latitude">Latitude</label>
+                <input type="text" class="form-control" name="latitude" placeholder="Input field" value="{{report.latitude}}">
+              </div>
+              <div class="form-group">
+                <div class="form-group">
+                  <label for="water_type">Water Type</label>
+                  <select id="water_type" class="form-control" name="water_type">
+                    <option>Bottled</option>
+                    <option>Well</option>
+                    <option>Stream</option>
+                    <option>Lake</option>
+                    <option>Spring</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="form-group">
+                  <label for="water_condition">Water Condition</label>
+                  <select id="water_condition" class="form-control" name="water_condition">
+                    <option>Potable</option>
+                    <option>Treatable-Clear</option>
+                    <option>Treatable-Muddy</option>
+                    <option>Waste</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary" style="display:block; width:50%; margin:0 auto;">Update</button>
+            </form>
+          </div>
+        </div>
+
+    <script>
+      var element = document.getElementById("water_type");
+      element.value="{{report.water_type}}";
+      element = document.getElementById("water_condition");
+      element.value="{{report.water_condition}}"
+    </script>
+
+    <!-- jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    
+  </body>
+</html>

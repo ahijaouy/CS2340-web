@@ -15,17 +15,17 @@
 		<nav class="navbar navbar-inverse">
 		  <div class="container-fluid">
 		    <div class="navbar-header">
-		      <a class="navbar-brand" href="index">Thirsty Goat</a>
+		      <a class="navbar-brand" href="/index">Thirsty Goat</a>
 		    </div>
 		    <ul class="nav navbar-nav">
-		      <li><a href="index">Home</a></li>
-		      <li class="active"><a href="water_reports">Water Reports</a></li>
-		      <li><a href="historical_reports">Historical Reports</a></li>
-		      <li><a href="admin">Admin</a></li>
+		      <li><a href="/index">Home</a></li>
+		      <li class="active"><a href="/water_reports">Water Reports</a></li>
+		      <li><a href="/historical_reports">Historical Reports</a></li>
+		      <li><a href="/admin">Admin</a></li>
 		    </ul>
 		    <ul class="nav navbar-nav navbar-right">
-		      <li><a href="profile"><span class="glyphicon glyphicon-user"></span> Edit Profile</a></li>
-		      <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+		      <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> Edit Profile</a></li>
+		      <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 		    </ul>
 		  </div>
 		</nav>
@@ -41,11 +41,13 @@
 						<thead>
 							<tr>
 								<th>Source Report ID</th>
-								<th>Location</th>
+								<th>Longitude</th>
+								<th>Latitude</th>
 								<th>Water Type</th>
 								<th>Water Condition</th>
 								<th>Reported By</th>
 								<th>Date Reported</th>
+								<th>Actions</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -53,16 +55,16 @@
 						
 							<tr>
 								<td>{{this.source_report_id}}</td>
-								<td>{{this.location}}</td>
+								<td>{{this.longitude}}</td>
+								<td>{{this.latitude}}</td>
 								<td>{{this.water_type}}</td>
 								<td>{{this.water_condition}}</td>
 								<td>{{this.user_modified}}</td>
 								<td>{{this.date_modified}}</td>
-								{{!-- {{#if reports}}
-    								<td>Purity Report(s)</td>
-  								{{else}}
-							    	
-							  	{{/if}} --}}
+								<td>
+		                            <a href="/source_reports/{{this.source_report_id}}/edit" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+		                            <a href="/source_reports/{{this.source_report_id}}/delete" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete</a>
+		                        </td>
 								
 							</tr>
 						{{/each}}
@@ -76,13 +78,17 @@
 						<form action="newSourceReport" method="POST" class="form" role="form">
 						
 							<div class="form-group">
-								<label for="location">Location</label>
-								<input type="text" class="form-control" name="location" placeholder="Input field">
+								<label for="longitude">Longitude</label>
+								<input type="text" class="form-control" name="longitude" placeholder="Input field">
+							</div>
+							<div class="form-group">
+								<label for="latitude">Latitude</label>
+								<input type="text" class="form-control" name="latitude" placeholder="Input field">
 							</div>
 							<div class="form-group">
 								<div class="form-group">
-								  <label for="watertype">Water Type</label>
-								  <select class="form-control" name="watertype">
+								  <label for="water_type">Water Type</label>
+								  <select class="form-control" name="water_type">
 								    <option>Bottled</option>
 								    <option>Well</option>
 								    <option>Stream</option>
@@ -94,8 +100,8 @@
 							</div>
 							<div class="form-group">
 								<div class="form-group">
-								  <label for="watercondition">Water Type</label>
-								  <select class="form-control" name="watercondition">
+								  <label for="water_condition">Water Condition</label>
+								  <select class="form-control" name="water_condition">
 								    <option>Potable</option>
 								    <option>Treatable-Clear</option>
 								    <option>Treatable-Muddy</option>
@@ -116,12 +122,14 @@
 							<tr>
 								<th>Purity Report ID</th>
 								<th>Source Report ID</th>
-								<th>Location</th>
+								<th>Longitude</th>
+								<th>Latitude</th>
 								<th>Overall Condition</th>
 								<th>Virus PPM</th>
 								<th>Contaminant PPM</th>
 								<th>Reported By</th>
 								<th>Date Reported</th>
+								<th>Actions</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -130,17 +138,17 @@
 							<tr>
 								<td>{{this.purity_report_id}}</td>
 								<td>{{this.source_report_id}}</td>
-								<td>{{this.location}}</td>
+								<td>{{this.longitude}}</td>
+								<td>{{this.latitude}}</td>
 								<td>{{this.overall_condition}}</td>
 								<td>{{this.virus_ppm}}</td>
 								<td>{{this.contaminant_ppm}}</td>
 								<td>{{this.user_modified}}</td>
 								<td>{{this.date_modified}}</td>
-								{{!-- {{#if reports}}
-    								<td>Purity Report(s)</td>
-  								{{else}}
-							    	
-							  	{{/if}} --}}
+								<td>
+		                            <a href="/purity_reports/{{this.purity_report_id}}/edit" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+		                            <a href="/purity_reports/{{this.purity_report_id}}/delete" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete</a>
+		                        </td>
 								
 							</tr>
 						
@@ -154,8 +162,8 @@
 						<form action="newPurityReport" method="POST" class="form" role="form">
 							<div class="form-group">
 								<div class="form-group">
-								  <label for="sourcereport">Source Report</label>
-								  <select class="form-control" name="sourcereport">
+								  <label for="source_id">Source Report</label>
+								  <select class="form-control" name="source_id">
 								    {{#each reports}}
 								    <option>{{this.source_report_id}}</option>
 								    {{/each}}
@@ -164,8 +172,8 @@
 							</div>
 							<div class="form-group">
 								<div class="overallcondition-group">
-								  <label for="watertype">Overall Condition</label>
-								  <select class="form-control" name="overallcondition">
+								  <label for="overall_condition">Overall Condition</label>
+								  <select class="form-control" name="overall_condition">
 								    <option>Safe</option>
 								    <option>Treatable</option>
 								    <option>Unsafe</option>
@@ -174,14 +182,14 @@
 							</div>
 							<div class="form-group">
 								<div class="form-group">
-								  <label for="virusppm">Virus PPM</label>
-								  <input type="number" class="form-control" name="virusppm"></input>
+								  <label for="virus_ppm">Virus PPM</label>
+								  <input type="number" class="form-control" name="virus_ppm"></input>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="form-group">
-								  <label for="contaminantppm">Contaminant PPM</label>
-								  <input type="number" class="form-control" name="contaminantppm"></input>
+								  <label for="contaminant_ppm">Contaminant PPM</label>
+								  <input type="number" class="form-control" name="contaminant_ppm"></input>
 								</div>
 							</div>
 							<button type="submit" class="btn btn-primary">Submit</button>

@@ -1,52 +1,71 @@
 <!DOCTYPE html>
 <html lang="en" style="width: 100%; height: 100%">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Thirsty Goat</title>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Thirsty Goat</title>
 
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-	</head>
-	<body style="width: 100%; height: 100%">
-		<nav class="navbar navbar-inverse">
-		  <div class="container-fluid">
-		    <div class="navbar-header">
-		      <a class="navbar-brand" href="index">Thirsty Goat</a>
-		    </div>
-		    <ul class="nav navbar-nav">
-		      <li class="active"><a href="index">Home</a></li>
-		      <li><a href="water_reports">Water Reports</a></li>
-		      <li><a href="historical_reports">Historical Reports</a></li>
-		      <li><a href="admin">Admin</a></li>
-		    </ul>
-		    <ul class="nav navbar-nav navbar-right">
-		      <li><a href="profile"><span class="glyphicon glyphicon-user"></span> Edit Profile</a></li>
-		      <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-		    </ul>
-		  </div>
-		</nav>
-		<h1 style="text-align: center">Water Source Reports Near You</h1>
-		<div class="col-md-10" id="map" style="width: 100%; height: 100%"></div>
+    </head>
+    <body style="width: 100%; height: 100%">
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="/index">Thirsty Goat</a>
+            </div>
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="/index">Home</a></li>
+              <li><a href="/water_reports">Water Reports</a></li>
+              <li><a href="/historical_reports">Historical Reports</a></li>
+              <li><a href="/admin">Admin</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> Edit Profile</a></li>
+              <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            </ul>
+          </div>
+        </nav>
+        <h1 style="text-align: center">Water Source Reports Near You</h1>
+        <div class="col-md-10" id="map" style="width: 100%; height: 85%"></div>
 
 
-		<script>
-	      var map;
-	      function initMap() {
-	        map = new google.maps.Map(document.getElementById('map'), {
-	          center: {lat: 33.7490, lng: -84.3880},
-	          zoom: 10
-	        });
-	      }
-	    </script>
-	    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNyA-jXmnBxisj6_lQiGPRuVBsr0LdZS0&callback=initMap"> 
-	    </script>
-		<!-- jQuery -->
-		<script src="//code.jquery.com/jquery.js"></script>
-		<!-- Bootstrap JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-		
-	</body>
+        <script>
+          var map;
+          function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+              center: {lat: 33.7490, lng: -84.3880},//coordinates for Atlanta
+              zoom: 10
+            });
+            {{#each reports}}
+              var myLatlng = new google.maps.LatLng({{this.latitude}},{{this.longitude}});
+              var contentString = "<h4>Source Report {{this.source_report_id}}</h4>"
+                                + "<p>Water Type: {{this.water_type}}</p>"
+                                + "<p>Water Condition: {{this.water_condition}}</p>";
+              var marker = new google.maps.Marker({
+                  position: myLatlng,
+                  map: map,
+                  title: "{{this.source_report_id}}"
+                });
+              bindInfoWindow(marker, map,  new google.maps.InfoWindow(), contentString);
+            {{/each}}
+          }
+          //Function to bind the info windows to the markers
+          function bindInfoWindow(marker, map, infowindow, html) {
+            marker.addListener('click', function() {
+                infowindow.setContent(html);
+                infowindow.open(map, this);
+            });
+          } 
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNyA-jXmnBxisj6_lQiGPRuVBsr0LdZS0&callback=initMap"> 
+        </script>
+        <!-- jQuery -->
+        <script src="//code.jquery.com/jquery.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        
+    </body>
 </html>
