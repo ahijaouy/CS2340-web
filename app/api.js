@@ -62,6 +62,7 @@ router.route('/purity_reports')
 	.post(function(req, res, next) {
 		stmt = 'INSERT INTO purity_reports (source_id, overall_condition, virus_ppm, contaminant_ppm, date_modified, user_modified) VALUES (?,?,?,?,?,?);';
 	    connection.query(stmt,[req.body.source_id,req.body.overall_condition,req.body.virus_ppm, req.body.contaminant_ppm, req.body.date_modified,req.body.user_modified], function(err, rows){ 
+	    	res.send(rows);
 	    	//console.log(err);
 	    });
 	});
@@ -78,6 +79,14 @@ router.route('/purity_reports/:id')
 			res.send(rows);
 		});
 		
+	});
+
+router.route('/purity_report_at_source/:id')
+	.get(function(req, res, next) {
+		var stmt = 'SELECT * from purity_reports where source_id=' + req.params.id + ";";
+		connection.query(stmt, function(err, rows) {
+			res.send(rows);
+		});
 	});
 
 //specific source reports
