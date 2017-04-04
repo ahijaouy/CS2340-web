@@ -1,38 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Thirsty Goat</title>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Thirsty Goat</title>
 
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-	</head>
-	<body>
-		<nav class="navbar navbar-inverse">
-		  <div class="container-fluid">
-		    <div class="navbar-header">
-		      <a class="navbar-brand" href="/index">Thirsty Goat</a>
-		    </div>
-		    <ul class="nav navbar-nav">
-		      <li><a href="/index">Home</a></li>
-		      <li><a href="/water_reports">Water Reports</a></li>
-		      <li class="active"><a href="/historical_reports">Historical Reports</a></li>
-		      <li><a href="/admin">Admin</a></li>
-		    </ul>
-		    <ul class="nav navbar-nav navbar-right">
-		      <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> Edit Profile</a></li>
-		      <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-		    </ul>
-		  </div>
-		</nav>
+    </head>
+    <body>
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/index">Thirsty Goat</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li><a href="/index">Home</a></li>
+            <li><a href="/water_reports">Water Reports</a></li>
+            <li class="active"><a href="/historical_reports">Historical Reports</a></li>
+            <li><a href="/admin">Admin</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> Edit Profile</a></li>
+            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="container-fluid">
+        <div class="row">
+          <form class="form-inline" style="display:block; width:70%; margin:0 auto;">
+            <div class="form-group">
+              <label for="longitude">Longitude</label>
+              <input type="text" class="form-control" id="longitude" placeholder="-84.5434">
+            </div>
+            <div class="form-group">
+              <label for="latitude">Latitude</label>
+              <input type="text" class="form-control" id="latitude" placeholder="34.2323">
+            </div>
+            <div class="form-group">
+              <label for="report_type">Report Type</label>
+              <select class="form-control" name="report_type">
+                <option>Contaminant PPM</option>
+                <option>Virus PPM</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="year">Year</label>
+              <input type="text" class="form-control" id="year" placeholder="2015">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Lookup</button>
+          </form>
+        </div>
+      </div>
 
-		<!-- jQuery -->
-		<script src="//code.jquery.com/jquery.js"></script>
-		<!-- Bootstrap JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-		
-	</body>
+        <!-- jQuery -->
+        <script src="//code.jquery.com/jquery.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        
+    </body>
 </html>

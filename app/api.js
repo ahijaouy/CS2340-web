@@ -94,6 +94,13 @@ router.route('/source_reports/:id')
 			});
 		});
 		
+	})
+	.put(function(req, res, next) {
+		var stmt = 'UPDATE source_reports SET longitude=?, latitude=?, water_type=?, water_condition=?, date_modified=?, user_modified=? WHERE source_report_id=' + req.params.id + ';';
+	    connection.query(stmt, [req.body.longitude, req.body.latitude,req.body.water_type,req.body.water_condition, req.body.date_modified, req.body.user_modified], function(err, rows) {
+	      if (err) {console.log(err)};
+	      
+	    });
 	});
 
 
