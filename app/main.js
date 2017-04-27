@@ -31,14 +31,14 @@ module.exports = function(app, passport) {
   });
 
     
-    //End of New Code
+  //End of New Code
 
 
   app.get('/', function(req, res) {
         res.render('login', {callback: process.env.callbackURL});
   });
 
-    //login, logout, and sign up routes
+  //login, logout, and sign up routes
   app.get('/logout', function(req, res) {
       req.logout();
       res.redirect('/');
@@ -72,7 +72,7 @@ module.exports = function(app, passport) {
   app.post('/newSourceReport', ensureLog, function(req, res) {
     res.redirect('/water_reports');
       stmt = 'INSERT INTO source_reports (longitude, latitude, water_type,water_condition,date_modified, user_modified) VALUES (?,?,?,?,?,?);';
-      connection.query(stmt,[req.body.longitude, req.body.latitude,req.body.water_type,req.body.water_condition, new Date(),'Username'], function(err, rows){ 
+      connection.query(stmt,[req.body.longitude, req.body.latitude,req.body.water_type,req.body.water_condition, new Date(),req.user._json.user_metadata.name], function(err, rows){ 
         console.log(err);
       });
   });
@@ -101,13 +101,13 @@ module.exports = function(app, passport) {
   app.post('/source_reports/:id/edit', ensureLog, function(req, res) {
     res.redirect('/water_reports');
     var stmt = 'UPDATE source_reports SET longitude=?, latitude=?, water_type=?, water_condition=?, date_modified=?, user_modified=? WHERE source_report_id=' + req.params.id + ';';
-    connection.query(stmt, [req.body.longitude, req.body.latitude,req.body.water_type,req.body.water_condition, new Date(),'Username'], function(err, rows) {
+    connection.query(stmt, [req.body.longitude, req.body.latitude,req.body.water_type,req.body.water_condition, new Date(),req.user._json.user_metadata.name], function(err, rows) {
       if (err) {console.log(err)};
       
     });
   });
 
-    app.get('/purity_reports/:id/edit', ensureLog, function(req, res) {
+  app.get('/purity_reports/:id/edit', ensureLog, function(req, res) {
     var stmt = 'SELECT * from purity_reports WHERE purity_report_id=' + req.params.id;
     var stmt2 = 'SELECT source_report_id FROM source_reports;';
     connection.query(stmt2, function(err2, rows2) {
@@ -131,7 +131,7 @@ module.exports = function(app, passport) {
   app.post('/purity_reports/:id/edit', ensureLog, function(req, res) {
     res.redirect('/water_reports');
     var stmt = 'UPDATE purity_reports SET source_id=?, overall_condition=?, virus_ppm=?, contaminant_ppm=?, date_modified=?, user_modified=? WHERE purity_report_id=' + req.params.id + ';';
-    connection.query(stmt, [req.body.source_id, req.body.overall_condition,req.body.virus_ppm,req.body.contaminant_ppm, new Date(),'Username'], function(err, rows) {
+    connection.query(stmt, [req.body.source_id, req.body.overall_condition,req.body.virus_ppm,req.body.contaminant_ppm, new Date(),req.user._json.user_metadata.name], function(err, rows) {
       if (err) {console.log(err)};
       
     });
@@ -140,7 +140,7 @@ module.exports = function(app, passport) {
   app.post('/newPurityReport', ensureLog, function(req, res) {
     res.redirect('/water_reports');
     stmt = 'INSERT INTO purity_reports (source_id, overall_condition, virus_ppm, contaminant_ppm, date_modified, user_modified) VALUES (?,?,?,?,?,?);';
-      connection.query(stmt,[req.body.source_id,req.body.overall_condition,req.body.virus_ppm, req.body.contaminant_ppm, new Date(),'Username'], function(err, rows){ 
+      connection.query(stmt,[req.body.source_id,req.body.overall_condition,req.body.virus_ppm, req.body.contaminant_ppm, new Date(),req.user._json.user_metadata.name], function(err, rows){ 
         console.log(err);
       });
   });
@@ -151,9 +151,10 @@ module.exports = function(app, passport) {
   });
 
   app.get('/admin', ensureLog, function(req, res) {
-    // callAuth0("get", "users", function(response) {
-    //   console.log(response);
-    // });
+    console.log(req.user._json.user_metadata.name);
+    callAuth0("get", "logs", function(response) {
+      console.log(response);
+    });
    
     res.render('admin');
   });

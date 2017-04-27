@@ -19,11 +19,11 @@
         <ul class="nav navbar-nav">
           <li><a href="/index">Home</a></li>
           <li class="active"><a href="/water_reports">Water Reports</a></li>
-          <li><a href="/historical_reports">Historical Reports</a></li>
-          <li><a href="/admin">Admin</a></li>
+          {{!-- <li><a href="/historical_reports">Historical Reports</a></li>
+          <li><a href="/admin">Admin</a></li> --}}
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> Edit Profile</a></li>
+          {{!-- <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> Edit Profile</a></li> --}}
           <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
         </ul>
       </div>
@@ -45,12 +45,12 @@
                 <div class="form-group">
                   <label for="water_type">Water Type</label>
                   <select id="water_type" class="form-control" name="water_type">
-                    <option>Bottled</option>
-                    <option>Well</option>
-                    <option>Stream</option>
-                    <option>Lake</option>
-                    <option>Spring</option>
-                    <option>Other</option>
+                    <option>BOTTLED</option>
+                    <option>WELL</option>
+                    <option>STREAM</option>
+                    <option>LAKE</option>
+                    <option>SPRING</option>
+                    <option>OTHER</option>
                   </select>
                 </div>
               </div>
@@ -58,10 +58,10 @@
                 <div class="form-group">
                   <label for="water_condition">Water Condition</label>
                   <select id="water_condition" class="form-control" name="water_condition">
-                    <option>Potable</option>
-                    <option>Treatable-Clear</option>
-                    <option>Treatable-Muddy</option>
-                    <option>Waste</option>
+                    <option>POTABLE</option>
+                    <option>TREATABLE-CLEAR</option>
+                    <option>TREATABLE-MUDDY</option>
+                    <option>WASTE</option>
                   </select>
                 </div>
               </div>
